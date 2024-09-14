@@ -5,13 +5,13 @@ import sys
 if __name__ == "__main__":
     args = sys.argv[1:]
     length = len(sys.argv) - 1
-    a = int(args[0])
-    opr = args[1]
-    b = int(args[2])
 
     if (length != 3):
         print("Usage: ./100-my_calculator.py <a> <operator> <b>")
         exit(1)
+    a = int(args[0])
+    opr = args[1]
+    b = int(args[2])
 
     if (opr == '+') or (opr == '-') or (opr == '*') or (opr == '/'):
         if (opr == '+'):
