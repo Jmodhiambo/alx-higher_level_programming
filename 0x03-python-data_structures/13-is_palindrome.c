@@ -26,22 +26,21 @@ int is_palindrome(listint_t **head)
 	if (list == NULL)
 		return (0);
 	ptr = *head;
-        for (i = 0; i < len; i++)
-        {
-                list[i] = ptr->n;
-                ptr = ptr->next;
-        }
+	for (i = 0; i < len; i++)
+	{
+		list[i] = ptr->n;
+		ptr = ptr->next;
+	}
 
-        /* Compare the array from both ends */
-        for (i = 0, j = len - 1; i < j; i++, j--)
-        {
-                if (list[i] != list[j])
-                {
-                        free(list); /* Free the allocated memory */
-                        return (0);
-                }
-        }
+	for (i = 0, j = len - 1; i < j; i++, j--)
+	{
+		if (list[i] != list[j])
+		{
+			free(list); /* Free the allocated memory */
+			return (0);
+		}
+	}
 
-        free(list); /* Free the allocated memory */
-        return (1);
+	free(list); /* Free the allocated memory */
+	return (1);
 }
