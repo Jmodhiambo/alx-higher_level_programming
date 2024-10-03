@@ -9,5 +9,5 @@ class Square:
     """Instatiates attribute size without type or value verification."""
 
     def __init__(self, value):
-       """Initializes a square with a private size attribute."""
-       self.__size = value
+        """Initializes a square with a private size attribute."""
+        self.__size = value
