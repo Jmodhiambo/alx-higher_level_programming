@@ -14,7 +14,8 @@ class Square:
     def __init__(self, size=0, position=(0, 0)):
         """
         Initializes the square with size and position.
-        Ensures size is an integer and >= 0, and position is a tuple of 2 positive integers.
+        Ensures size is an integer and >= 0,
+            and position is a tuple of 2 positive integers.
         """
         self.size = size
         self.position = position
