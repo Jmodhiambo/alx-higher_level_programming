@@ -1,4 +1,17 @@
 #!/usr/bin/python3
+"""
+This module defines a `Square` class for representing a square.
+
+The `Square` class allows for the creation of square objects with a size.
+It provides methods for computing the area of the square, as well as comparison
+operators to compare squares based on their area.
+
+Attributes:
+-----------
+size : int or float
+    The size of the square, which must be a non-negative number.
+"""
+
 
 class Square:
     """
