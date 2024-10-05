@@ -75,25 +75,26 @@ class Square:
         if self.__size == 0:
             print()
         else:
-            # Print leading empty lines based on position[1]
+            """ Print leading empty lines based on position[1]"""
             for _ in range(self.__position[1]):
                 print()
-            # Print the square with spaces at the beginning of each line
+            """Print the square with spaces at the beginning of each line"""
             for _ in range(self.__size):
                 print(" " * self.__position[0] + "#" * self.__size)
 
     def __str__(self):
         """
-        Custom __str__ method to return the string representation of the square.
+        Custom __str__ method to return the string representation
+            of the square.
         The behavior is the same as my_print().
         """
         if self.__size == 0:
             return ""
         result = []
-        # Add leading empty lines based on position[1]
+        """Add leading empty lines based on position[1]"""
         for _ in range(self.__position[1]):
             result.append("")
-        # Add the square lines with spaces
+        """Add the square lines with spaces"""
         for _ in range(self.__size):
             result.append(" " * self.__position[0] + "#" * self.__size)
         return "\n".join(result)
