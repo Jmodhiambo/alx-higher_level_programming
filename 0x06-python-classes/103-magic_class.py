@@ -2,7 +2,7 @@
 """
 magic_class.py
 
-This module defines the MagicClass, which represents a circle with a specified radius.
+This module defines MagicClass, representng a circle with a specified radius.
 It provides methods to calculate the area and circumference of the circle.
 
 Classes:
