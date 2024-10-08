@@ -5,6 +5,7 @@
        - Private instance attribute width and height
 """
 
+
 class Rectangle:
     """Defines a rectangle based on private instance width and height"""
     def __init__(self, width=0, height=0):
