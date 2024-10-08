@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-   Module 1-rectangle
+   Module 2-rectangle
    Defines class rectangle by:
        - Private instance attribute width and height
 """
@@ -13,12 +13,10 @@ class Rectangle:
         self.width = width
         self.height = height
 
-        @property
         def width(self):
             """Gets the width"""
             return self.__width
 
-        @width.setter
         def width(self, value):
             """Sets the width"""
             if not isinstance(value, int):
@@ -28,13 +26,11 @@ class Rectangle:
 
             self.__width = value
 
-        @property
         def height(self):
             """Gets the height"""
             return self.__width
 
-        @height.setter
-        def height(self, value):
+        def width(self, value):
             """Sets the height"""
             if not isinstance(value, int):
                 raise TypeError("height must be an integer")
