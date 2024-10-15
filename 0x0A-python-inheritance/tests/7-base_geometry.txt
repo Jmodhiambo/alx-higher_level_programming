@@ -1,0 +1,25 @@
+Test for BaseGeometry class
+
+1. Test area() method
+   - Create an instance of BaseGeometry:
+       bg = BaseGeometry()
+   - Call bg.area()
+   - Expected Result: Raise Exception with message "area() is not implemented"
+
+2. Test integer_validator() method with valid input
+   - Call bg.integer_validator("my_int", 12)
+     - Expected Result: No exception raised
+   - Call bg.integer_validator("width", 89)
+     - Expected Result: No exception raised
+
+3. Test integer_validator() method with invalid type
+   - Call bg.integer_validator("name", "John")
+     - Expected Result: Raise TypeError with message "name must be an integer"
+
+4. Test integer_validator() method with invalid value (0)
+   - Call bg.integer_validator("age", 0)
+     - Expected Result: Raise ValueError with message "age must be greater than 0"
+
+5. Test integer_validator() method with invalid value (negative)
+   - Call bg.integer_validator("distance", -4)
+     - Expected Result: Raise ValueError with message "distance must be greater than 0"
