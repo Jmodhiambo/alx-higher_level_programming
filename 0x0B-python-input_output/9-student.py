@@ -17,7 +17,7 @@ class Student:
     def to_json(self):
         """
         Retrieves a dictionary representation of a Student instance
-        with simple data structures 
+        with simple data structures
             - list, dictionary, string, integer, and boolean.
         """
         return self.__dict__
