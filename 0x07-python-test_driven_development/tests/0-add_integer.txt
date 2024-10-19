@@ -1,0 +1,19 @@
+>>> res = __import__('0-add_integer').add_integer
+>>> print(res(9, 0))
+9
+>>> print(res(5))
+103
+>>> print(res(-10))
+88
+>>> print(res(True))
+99
+>>> print(res(False))
+98
+>>> print(res())
+Traceback (most recent call last):
+    ...
+TypeError: add_integer() missing 1 required positional argument: 'a'
+>>> print(res(NULL))
+Traceback (most recent call last):
+    ...
+NameError: name 'NULL' is not defined
