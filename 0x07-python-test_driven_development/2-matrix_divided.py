@@ -42,7 +42,7 @@ def matrix_divided(matrix, div):
     for i in matrix:
         for j in i:
             j = round(j / div, 2)
-            if len(res1) < len1:
+            if len(res1) < len(matrix[0]):
                 res1.append(j)
             else:
                 res2.append(j)
