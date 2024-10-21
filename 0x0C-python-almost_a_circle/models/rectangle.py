@@ -14,8 +14,7 @@ class Rectangle(Base):
         """
         Initialized the method of the class
         """
-        self.id = id
-        super().__init__(self.id)
+        super().__init__(id)
         self.width = width
         self.height = height
         self.x = x
@@ -29,6 +28,10 @@ class Rectangle(Base):
     @width.setter
     def width(self, value):
         """Sets the width."""
+        if not isinstance(value, int):
+            raise TypeError("width must be an integer")
+        if value <= 0:
+            raise ValueError("width must be > 0")
         self.__width = value
 
     @property
@@ -39,24 +42,74 @@ class Rectangle(Base):
     @height.setter
     def height(self, value):
         """Sets the height."""
+        if not isinstance(value, int):
+            raise TypeError("height must be an integer")
+        if value <= 0:
+            raise ValueError("height must be > 0")
         self.__height = value
 
     @property
     def x(self):
-        """Gets the width."""
+        """Gets the x."""
         return self.__x
 
     @x.setter
     def x(self, value):
-        """Sets the width."""
+        """Sets the x."""
+        if not isinstance(value, int):
+            raise TypeError("x must be an integer")
+        if value < 0:
+            raise ValueError("x must be >= 0")
         self.__x = value
 
     @property
     def y(self):
-        """Gets the height."""
+        """Gets the y."""
         return self.__y
 
     @y.setter
     def y(self, value):
-        """Sets the height."""
+        """Sets the y."""
+        if not isinstance(value, int):
+            raise TypeError("y must be an integer")
+        if value < 0:
+            raise ValueError("y must be > 0")
         self.__y = value
+
+    def area(self):
+        """Returns the area of the rectangle."""
+        return self.__width * self.__height
+
+    def display(self):
+        """Prints to the stdout the Rectangle instance with character #."""
+        for i in range(self.__y):
+            print()
+        for i in range(self.__height):
+            print(" " * self.__x, "#" * self.__width)
+
+    def __str__(self):
+        """
+        Updates the class Rectangle by overriding the __str__ method
+        so that it returns [Rectangle] (<id>) <x>/<y> - <width>/<height>.
+        """
+        # Shorted them to avoid pycodestyle errrr of more 80 words per line
+        xx = self.__x
+        yy = self.__y
+        ww = self.__width
+        hh = self.__height
+        return f"[Rectangle] ({self.id}) {xx}/{yy} - {ww}/{hh}"
+
+    def update(self, *args, **kwargs):
+        """Updates the Rectangle by assigning values to attributes."""
+        # If *args is not empty, assign values
+        if args:
+            # This list contains the order of attributes to be updated
+            attributes = ["id", "width", "height", "x", "y"]
+            for index, value in enumerate(args):
+                if index < len(attributes):
+                    setattr(self, attributes[index], value)
+        # If *args is empty, use **kwargs
+        elif kwargs:
+            for key, value in kwargs.items():
+                if hasattr(self, key):  # Check if the attribute exists
+                    setattr(self, key, value)
