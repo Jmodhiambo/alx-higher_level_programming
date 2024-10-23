@@ -61,7 +61,7 @@ class TestBase(unittest.TestCase):
         # Checks when the json_string is not empty
         json_str = '[{ "id": 89 }]'
         data = Base.from_json_string(json_str)
-        self.assertTrue(isinstance(data, int))
+        self.assertTrue(isinstance(data, list))
 
 if __name__ == '__main__':
     unittest.main()
