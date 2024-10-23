@@ -86,7 +86,7 @@ class Rectangle(Base):
             print("\n" * self.y, end="")
         for i in range(self.height):
             if self.x > 0:
-                print(" " * self.x, "#" * self.width)
+                print(" " * self.x + "#" * self.width)
             else:
                 print("#" * self.width)
 
