@@ -4,7 +4,7 @@ import unittest
 from models.base import Base
 
 
-class TestBase(unittest.Testcase):
+class TestBase(unittest.TestCase):
 
     def setUp(self):
         """Reset the class-level counter before each test."""
@@ -18,7 +18,7 @@ class TestBase(unittest.Testcase):
 
         self.assertEqual(b1.id, 1)
         self.assertEqual(b2.id, 2)
-        self.assertEqual(b2.id, 3)
+        self.assertEqual(b3.id, 3)
 
     def test_id_custom(self):
         """Test if custom id works."""
