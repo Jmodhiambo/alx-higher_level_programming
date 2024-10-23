@@ -31,11 +31,37 @@ class TestBase(unittest.TestCase):
         json_str = Base.to_json_string(data)
         self.assertTrue(isinstance(json_str, str))
 
+        # Checks when the list is empty
+        data = []
+        json_str = Base.to_json_string(data)
+        self.assertEqual(json_str, "[]")
+
+        # Checks when nothing is passed
+        data = None
+        json_str = Base.to_json_string(data)
+        self.assertEqual(json_str, "[]")
+
     def test_save_to_file_none(self):
         """Test if saving to file handles None."""
         Base.save_to_file(None)
         with open("Base.json", "r") as file:
             self.assertEqual(file.read(), "[]")
 
-if __name__ == "__main__":
+    def test_from_json_string(self):
+        """Test is from_json_string works."""
+        json_str = None
+        data = Base.from_json_string(json_str)
+        self.assertEqual(data, [])
+
+        # Checks when the json string is empty
+        json_str = "[]"
+        data = Base.from_json_string(json_str)
+        self.assertEqual(data, [])
+
+        # Checks when the json_string is not empty
+        json_str = '[{ "id": 89 }]'
+        data = Base.from_json_string(json_str)
+        self.assertTrue(isinstance(data, int))
+
+if __name__ == '__main__':
     unittest.main()
