@@ -74,11 +74,11 @@ class Rectangle(Base):
             raise TypeError("y must be an integer")
         if value < 0:
             raise ValueError("y must be >= 0")
-        self.y = value
+        self.__y = value
 
     def area(self):
         """Returns the area of the rectangle."""
-        return self.__width * self.__height
+        return self.width * self.height
 
     def display(self):
         """Prints to the stdout the Rectangle instance with character #."""
@@ -93,10 +93,10 @@ class Rectangle(Base):
         so that it returns [Rectangle] (<id>) <x>/<y> - <width>/<height>.
         """
         # Shorted them to avoid pycodestyle errrr of more 80 words per line
-        xx = self.__x
-        yy = self.__y
-        ww = self.__width
-        hh = self.__height
+        xx = self.x
+        yy = self.y
+        ww = self.width
+        hh = self.height
         return f"[Rectangle] ({self.id}) {xx}/{yy} - {ww}/{hh}"
 
     def update(self, *args, **kwargs):
