@@ -2,6 +2,8 @@
 import unittest
 from models.rectangle import Rectangle
 from models.base import Base
+from io import StringIO
+import sys
 
 
 class TestRectangle(unittest.TestCase):
@@ -104,6 +106,45 @@ class TestRectangle(unittest.TestCase):
         r = Rectangle(2, 8, 5, 6, 57)
         str_rep = f"[Rectangle] ({r.id}) {r.x}/{r.y} - {r.width}/{r.height}"
         self.assertEqual(r.__str__(), str_rep)
+
+    def test_display_no_x_no_y(self):
+        """Test the display method when no x and y are provided."""
+        r = Rectangle(4, 3)
+        expected_output = "####\n####\n####\n"
+        
+        # Redirect stdout to capture print output
+        output = StringIO()
+        sys.stdout = output
+        r.display()
+        sys.stdout = sys.__stdout__
+        
+        self.assertEqual(output.getvalue(), expected_output)
+
+    def test_display_with_y_only(self):
+        """Test the display method with only y provided."""
+        r = Rectangle(4, 3, 0, 2)  # x = 0, y = 2
+        expected_output = "\n\n####\n####\n####\n"
+        
+        # Redirect stdout to capture print output
+        output = StringIO()
+        sys.stdout = output
+        r.display()
+        sys.stdout = sys.__stdout__
+        
+        self.assertEqual(output.getvalue(), expected_output)
+
+    def test_display_with_x_and_y(self):
+        """Test the display method with both x and y provided."""
+        r = Rectangle(4, 3, 2, 2)  # x = 2, y = 2
+        expected_output = "\n\n  ####\n  ####\n  ####\n"
+        
+        # Redirect stdout to capture print output
+        output = StringIO()
+        sys.stdout = output
+        r.display()
+        sys.stdout = sys.__stdout__
+        
+        self.assertEqual(output.getvalue(), expected_output)
 
 if __name__ == "__main__":
     unittest.main()
