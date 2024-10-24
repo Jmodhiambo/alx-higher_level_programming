@@ -3,6 +3,7 @@ import unittest
 from models.square import Square
 import io
 import sys
+import os
 
 
 class TestSquare(unittest.TestCase):
@@ -106,6 +107,12 @@ class TestSquare(unittest.TestCase):
     def test_square_save_to_file_empty(self):
         """Test save_to_file method when list is empty."""
         Square.save_to_file([])
+        with open("Square.json", "r") as file:
+            self.assertEqual(file.read(), '[]')
+
+    def test_square_save_to_file_none(self):
+        """Test save_to_file method when None is passed."""
+        Square.save_to_file(None)
         with open("Square.json", "r") as file:
             self.assertEqual(file.read(), '[]')
 
