@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import unittest
 from models.square import Square
+from models.base import Base
 import io
 import sys
 import os
@@ -11,7 +12,7 @@ class TestSquare(unittest.TestCase):
 
     def setUp(self):
         """Reset the class-level counter before each test."""
-        Square._Base__nb_objects = 0
+        Base._Base__nb_objects = 0
 
     def test_square_initialization(self):
         """Test the basic initialization of Square."""
@@ -105,7 +106,7 @@ class TestSquare(unittest.TestCase):
             self.assertEqual(file.read(), expected)
 
     def test_square_save_to_file_empty(self):
-        """Test save_to_file method when list is empty."""
+        """Test save_to_file method when an empty list is passed."""
         Square.save_to_file([])
         with open("Square.json", "r") as file:
             self.assertEqual(file.read(), '[]')
@@ -115,6 +116,22 @@ class TestSquare(unittest.TestCase):
         Square.save_to_file(None)
         with open("Square.json", "r") as file:
             self.assertEqual(file.read(), '[]')
+
+    def test_square_save_to_file_single_square(self):
+        """Test save_to_file method when a single Square is passed."""
+        s = Square(1)
+        Square.save_to_file([s])
+        with open("Square.json", "r") as file:
+            expected = '[{"id": 1, "size": 1, "x": 0, "y": 0}]'
+            self.assertEqual(file.read(), expected)
+
+    def test_square_create(self):
+        """Test create method for Square."""
+        s = Square.create(**{'id': 89, 'size': 1, 'x': 2, 'y': 3})
+        self.assertEqual(s.id, 89)
+        self.assertEqual(s.size, 1)
+        self.assertEqual(s.x, 2)
+        self.assertEqual(s.y, 3)
 
     def test_square_load_from_file(self):
         """Test load_from_file method of Square."""
