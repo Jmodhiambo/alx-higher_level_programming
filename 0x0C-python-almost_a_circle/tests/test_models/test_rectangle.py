@@ -4,6 +4,7 @@ from models.rectangle import Rectangle
 from models.base import Base
 from io import StringIO
 import sys
+import os
 
 
 class TestRectangle(unittest.TestCase):
@@ -11,6 +12,13 @@ class TestRectangle(unittest.TestCase):
     def setUp(self):
         """Resets everything before running a test."""
         Base._Base__nb_objects = 0
+
+    def tearDown(self):
+        """Cleanup the test environment by removing files after each test."""
+        try:
+            os.remove("Rectangle.json")
+        except FileNotFoundError:
+            pass
 
     def test_width(self):
         """Test valid and invalid values for width."""
@@ -129,6 +137,7 @@ class TestRectangle(unittest.TestCase):
         output = StringIO()
         sys.stdout = output
         r.display()
+        # Reset stdout to default to print normally again
         sys.stdout = sys.__stdout__
         
         self.assertEqual(output.getvalue(), expected_output)
@@ -145,6 +154,194 @@ class TestRectangle(unittest.TestCase):
         sys.stdout = sys.__stdout__
         
         self.assertEqual(output.getvalue(), expected_output)
+
+    def test_to_dictionary(self):
+        """Test the to_dictionary method for the Rectangle class."""
+        r1 = Rectangle(10, 2, 1, 9, 5)
+        expected_dict = {
+            'id': 5,
+            'width': 10,
+            'height': 2,
+            'x': 1,
+            'y': 9
+        }
+        self.assertEqual(r1.to_dictionary(), expected_dict)
+
+    def test_to_dictionary_auto_id(self):
+        """Test to_dictionary when id is auto-generated."""
+        r2 = Rectangle(3, 4, 2, 2)
+        expected_dict = {
+            'id': 1,  # Since this is the first object, id will be 1
+            'width': 3,
+            'height': 4,
+            'x': 2,
+            'y': 2
+        }
+        self.assertEqual(r2.to_dictionary(), expected_dict)
+
+    def test_to_dictionary_updated(self):
+        """Test to_dictionary after updating the attributes."""
+        r3 = Rectangle(5, 5, 1, 1, 15)
+        r3.width = 20
+        r3.height = 30
+        r3.x = 3
+        r3.y = 4
+        expected_dict = {
+            'id': 15,
+            'width': 20,
+            'height': 30,
+            'x': 3,
+            'y': 4
+        }
+        self.assertEqual(r3.to_dictionary(), expected_dict)
+
+    def test_to_dictionary_type(self):
+        """Test that to_dictionary returns a dictionary."""
+        r4 = Rectangle(7, 8)
+        self.assertTrue(isinstance(r4.to_dictionary(), dict))
+
+    def test_update_args(self):
+        """Test update method with positional arguments."""
+        r1 = Rectangle(10, 20, 5, 7, 1)
+        r1.update(89, 4, 3, 2, 1)
+
+        self.assertEqual(r1.id, 89)
+        self.assertEqual(r1.width, 4)
+        self.assertEqual(r1.height, 3)
+        self.assertEqual(r1.x, 2)
+        self.assertEqual(r1.y, 1)
+
+    def test_update_kwargs(self):
+        """Test update method with keyword arguments."""
+        r1 = Rectangle(10, 20, 5, 7, 1)
+        r1.update(id=89, width=4, height=3, x=2, y=1)
+
+        self.assertEqual(r1.id, 89)
+        self.assertEqual(r1.width, 4)
+        self.assertEqual(r1.height, 3)
+        self.assertEqual(r1.x, 2)
+        self.assertEqual(r1.y, 1)
+
+    def test_update_args_and_kwargs(self):
+        """Test update method with both args and kwargs, only args should be used."""
+        r1 = Rectangle(10, 20, 5, 7, 1)
+        r1.update(89, 4, 3, 2, 1, id=50, width=99, height=98, x=99, y=100)
+
+        # Positional arguments take precedence over keyword arguments
+        self.assertEqual(r1.id, 89)
+        self.assertEqual(r1.width, 4)
+        self.assertEqual(r1.height, 3)
+        self.assertEqual(r1.x, 2)
+        self.assertEqual(r1.y, 1)
+
+    def test_update_no_args(self):
+        """Test update method with no arguments, nothing should change."""
+        r1 = Rectangle(10, 20, 5, 7, 1)
+        r1.update()
+
+        self.assertEqual(r1.id, 1)
+        self.assertEqual(r1.width, 10)
+        self.assertEqual(r1.height, 20)
+        self.assertEqual(r1.x, 5)
+        self.assertEqual(r1.y, 7)
+
+    def test_update_invalid_args(self):
+        """Test update method with invalid arguments."""
+        r1 = Rectangle(10, 20, 5, 7, 1)
+
+        with self.assertRaises(TypeError):
+            r1.update(89, "invalid_width")  # Invalid width (string instead of int)
+        
+        with self.assertRaises(ValueError):
+            r1.update(89, -10, 20)  # Invalid width (negative value)
+
+    def test_update_partial_kwargs(self):
+        """Test update method with partial keyword arguments."""
+        r1 = Rectangle(10, 20, 5, 7, 1)
+        r1.update(width=30)
+
+        self.assertEqual(r1.width, 30)
+        self.assertEqual(r1.height, 20)  # Unchanged
+        self.assertEqual(r1.x, 5)  # Unchanged
+        self.assertEqual(r1.y, 7)  # Unchanged
+
+    def test_create_rectangle(self):
+        """Test the create method to create a new Rectangle from dictionary."""
+        rect_dict = {'id': 89, 'width': 10, 'height': 4, 'x': 2, 'y': 3}
+        rect = Rectangle.create(**rect_dict)
+
+        self.assertEqual(rect.id, 89)
+        self.assertEqual(rect.width, 10)
+        self.assertEqual(rect.height, 4)
+        self.assertEqual(rect.x, 2)
+        self.assertEqual(rect.y, 3)
+
+    def test_create_rectangle_default_id(self):
+        """Test create method when id is not provided."""
+        rect_dict = {'width': 10, 'height': 4, 'x': 2, 'y': 3}
+        rect = Rectangle.create(**rect_dict)
+
+        self.assertEqual(rect.width, 10)
+        self.assertEqual(rect.height, 4)
+        self.assertEqual(rect.x, 2)
+        self.assertEqual(rect.y, 3)
+
+    def test_save_to_file(self):
+        """Test the save_to_file method with normal Rectangle instances."""
+        rect1 = Rectangle(10, 7, 2, 8, 1)
+        rect2 = Rectangle(2, 4, 0, 0, 2)
+        Rectangle.save_to_file([rect1, rect2])
+
+        with open("Rectangle.json", "r") as file:
+            content = file.read()
+
+        expected = '[{"id": 1, "width": 10, "height": 7, "x": 2, "y": 8}, {"id": 2, "width": 2, "height": 4, "x": 0, "y": 0}]'
+        self.assertEqual(content, expected)
+
+    def test_save_to_file_empty_list(self):
+        """Test the save_to_file method with an empty list."""
+        Rectangle.save_to_file([])
+
+        with open("Rectangle.json", "r") as file:
+            content = file.read()
+
+        self.assertEqual(content, "[]")
+
+    def test_save_to_file_none(self):
+        """Test the save_to_file method when None is passed."""
+        Rectangle.save_to_file(None)
+
+        with open("Rectangle.json", "r") as file:
+            content = file.read()
+
+        self.assertEqual(content, "[]")
+
+    def test_load_from_file(self):
+        """Test the load_from_file method with normal Rectangle instances."""
+        rect1 = Rectangle(10, 7, 2, 8, 1)
+        rect2 = Rectangle(2, 4, 0, 0, 2)
+        Rectangle.save_to_file([rect1, rect2])
+
+        rectangles = Rectangle.load_from_file()
+        self.assertEqual(len(rectangles), 2)
+
+        self.assertEqual(rectangles[0].id, 1)
+        self.assertEqual(rectangles[0].width, 10)
+        self.assertEqual(rectangles[0].height, 7)
+        self.assertEqual(rectangles[0].x, 2)
+        self.assertEqual(rectangles[0].y, 8)
+
+        self.assertEqual(rectangles[1].id, 2)
+        self.assertEqual(rectangles[1].width, 2)
+        self.assertEqual(rectangles[1].height, 4)
+        self.assertEqual(rectangles[1].x, 0)
+        self.assertEqual(rectangles[1].y, 0)
+
+    def test_load_from_file_no_file(self):
+        """Test the load_from_file method when no file exists."""
+        rectangles = Rectangle.load_from_file()
+
+        self.assertEqual(rectangles, [])
 
 if __name__ == "__main__":
     unittest.main()
