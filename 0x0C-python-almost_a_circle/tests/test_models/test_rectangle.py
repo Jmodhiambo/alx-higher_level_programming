@@ -94,6 +94,16 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(r2.id, 999)
         self.assertEqual(r3.id, 2)
 
+    def test_area(self):
+        """Test if area works well."""
+        r = Rectangle(4, 5)
+        self.assertEqual(r.area(), 20)
+
+    def test___str__(self):
+        """Test if the magic string works."""
+        r = Rectangle(2, 8, 5, 6, 57)
+        str_rep = f"[Rectangle] ({r.id}) {r.x}/{r.y} - {r.width}/{r.height}"
+        self.assertEqual(r.__str__(), str_rep)
 
 if __name__ == "__main__":
     unittest.main()
