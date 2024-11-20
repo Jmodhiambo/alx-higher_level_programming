@@ -1,8 +1,7 @@
--- Step 1: Convert the database to UTF8 (utf8mb4, collation utf8mb4_unicode_ci)
-ALTER DATABASE hbtn_0c_0 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+-- Set the current database context to hbtn_0c_0
+USE `hbtn_0c_0`;
 
--- Step 2: Convert the table first_table to UTF8 (utf8mb4, collation utf8mb4_unicode_ci)
-ALTER TABLE first_table CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- Step 3: Convert the 'name' field in first_table to UTF8 (utf8mb4, collation utf8mb4_unicode_ci)
-ALTER TABLE first_table MODIFY name VARCHAR(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- Alter the first_table to convert its character set and collation
+-- Convert all columns in first_table to utf8mb4 character set and utf8mb4_unicode_ci collation
+ALTER TABLE `first_table`
+CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
