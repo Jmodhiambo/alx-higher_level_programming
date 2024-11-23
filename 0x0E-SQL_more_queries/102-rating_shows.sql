@@ -2,8 +2,8 @@
 -- Each record displays: tv_shows.title - rating sum
 -- Results are sorted in descending order by the rating sum
 
-SELECT tv_shows.title, SUM(tv_show_ratings.rating) AS rating
+SELECT tv_shows.title, SUM(tv_show_ratings.score) AS rating
 FROM tv_shows
 JOIN tv_show_ratings ON tv_shows.id = tv_show_ratings.show_id
-GROUP BY tv_shows.title
+GROUP BY tv_shows.id
 ORDER BY rating DESC;
