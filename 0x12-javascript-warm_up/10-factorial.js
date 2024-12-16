@@ -1,13 +1,12 @@
 #!/usr/bin/node
 const args = process.argv.slice(2);
-let factorial = 1;
 const count = Number(args[0]);
 
-if (isNaN(count)) {
-  console.log(1);
-  return;
+function factorial (n) {
+  if (isNaN(n) || n === 0) {
+    return 1;
+  }
+  return n * factorial(n - 1);
 }
-for (let i = 1; i <= count; i++) {
-  factorial = factorial * i;
-}
-console.log(factorial);
+
+console.log(factorial(count));
