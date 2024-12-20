@@ -5,6 +5,8 @@ class Rectangle {
     if (w > 0 && h > 0 && Number.isInteger(w) && Number.isInteger(h)) {
       this.width = w;
       this.height = h;
+    } else {
+      return {}; /* Returns an empty object. */
     } 
   }
 
@@ -32,9 +34,11 @@ class Square extends Rectangle {
   }
 
   charPrint (c) {
-    const chr = c || 'X';
+    if (c === undefined) {
+      c = 'X';
+    }
     for (let i = 0; i < this.height; i++) {
-      console.log(chr.repeat(this.width));
+      console.log(c.repeat(this.width));
     }
   }
 }
