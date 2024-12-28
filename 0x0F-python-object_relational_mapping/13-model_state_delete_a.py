@@ -22,7 +22,7 @@ if __name__ == "__main__":
     session = Session()
 
     # Delete all states with a name containing the letter 'a'
-    states_to_delete = session.query(State).filter(State.name.ilike('%a%'))
+    states_to_delete = session.query(State).filter(State.name.like('%a%'))
     states_to_delete.delete(synchronize_session=False)
 
     # Commit the changes
