@@ -21,12 +21,14 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Delete all states with a name containing the letter 'a'
-    states_to_delete = session.query(State).filter(State.name.like('%a%'))
-    states_to_delete.delete(synchronize_session=False)
+    # Query states to delete
+    states_to_delete = session.query(State).filter(State.name.ilike('%a%')).all()
 
-    # Commit the changes
-    session.commit()
+    # Check if there are any states to delete
+    if states_to_delete:
+        for state in states_to_delete:
+            session.delete(state)
+        session.commit()  # Commit all deletions
 
     # Close the session
     session.close()
