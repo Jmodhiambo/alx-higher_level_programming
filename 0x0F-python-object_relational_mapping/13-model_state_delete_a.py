@@ -26,7 +26,7 @@ if __name__ == "__main__":
     session = Session()
 
     # Query to change the name of the state which id is 2.
-    state_del = session.query(State).filter(State.name.like('%a%')).all()
+    state_del = session.query(State).filter(State.name.like('%a%', escape="\\")).all()
     for delete in state_del:
         session.delete(delete)
 
