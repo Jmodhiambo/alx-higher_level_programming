@@ -3,6 +3,7 @@
 This script deletes all State objects with a name containing
 the letter a from the database hbtn_0e_6_usa.
 """
+
 import sys
 from model_state import Base, State
 from sqlalchemy.orm import sessionmaker
@@ -25,9 +26,11 @@ if __name__ == "__main__":
     session = Session()
 
     # Query to change the name of the state which id is 2.
-    for state in session.query(State).filter(State.name.ilike('%a%')):
-        session.delete(state)
-        session.commit()
+    state_del = session.query(State).filter(State.name.like('%a%', escape="\\")).all()
+    for delete in state_del:
+        session.delete(delete)
+
+    session.commit()
 
     # Close the session
     session.close()
