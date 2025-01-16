@@ -7,4 +7,4 @@ if [ -z "$1" ]; then
 fi
 
 # Send a request to the URL and display the size of the body in bytes
-curl -s "$1" | wc -c
+curl -sI "$1" | grep -i Content-Length | awk '{print $2}'
