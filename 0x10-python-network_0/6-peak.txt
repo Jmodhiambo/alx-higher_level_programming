@@ -1,2 +1,2 @@
 # The complexity of the peak algorithm
-O(nlog(n))
+O(log(n))
