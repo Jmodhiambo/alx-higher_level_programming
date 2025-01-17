@@ -2,67 +2,31 @@
 # This function returns the peak value in a list or None if empty
 
 def find_peak(list_of_integers):
-    """ Returns a peak value from a list"""
-
-    if list_of_integers is None or len(list_of_integers) == 0:
-        return None
-
-    if len(list_of_integers) == 1:
-        return list_of_integers[0]
-
-    mid_idx = int(len(list_of_integers) / 2)
-
-    if mid_idx != len(list_of_integers) - 1:
-        if list_of_integers[mid_idx - 1] < list_of_integers[mid_idx] and\
-           list_of_integers[mid_idx + 1] < list_of_integers[mid_idx]:
-            return list_of_integers[mid_idx]
-    else:
-        if list_of_integers[mid_idx - 1] < list_of_integers[mid_idx]:
-            return list_of_integers[mid_idx]
-        else:
-            return list_of_integers[mid_idx - 1]
-
-    if list_of_integers[mid_idx - 1] > list_of_integers[mid_idx]:
-        a_list = list_of_integers[0:mid_idx]
-    else:
-        a_list = list_of_integers[mid_idx + 1:]
-
-    return find_peak(a_list)
-
-"""
-def find_peak(list_of_integers):
-    "" Returns a peak value from a list""
+    """Returns a peak value from a list"""
     if not list_of_integers:
         return None
 
     lt = list_of_integers
     length = len(lt)
 
-    # Return the item if it's only in the list
+    # Return the item if it's the only element in the list
     if length == 1:
         return lt[0]
-    # Return the largest value if they are only two
+    # Return the largest value if there are only two elements
     if length == 2:
         return lt[0] if lt[0] >= lt[1] else lt[1]
 
-    # Finds the mid value to use as starting point
-    mid_val = length // 2
+    # Find the mid value to use as the starting point
+    mid_value = length // 2
 
-    # Boundary checks for mid_value
-    if mid_val > 0 and mid_val < length - 1:
-        if lt[mid_val] >= lt[mid_val - 1] and lt[mid_val] >= lt[mid_val + 1]:
-            return lt[mid_val]
-        elif lt[mid_val - 1] > lt[mid_val]:
-            return find_peak(lt[:mid_val])  # search in left half
-        else:
-            return find_peak(lt[mid_val + 1:])  # search in right half
-    elif mid_value == 0:  # If the first element is the peak
-        if lt[0] >= lt[1]:
-            return lt[0]
-        else:
-            return find_peak(lt[1:])
-    else:  # If the last element is the peak
-        if lt[-1] >= lt[-2]:
-            return lt[-1]
-        else:
-            return find_peak(lt[:-1])"""
+    # Check for peak at mid_value
+    if (mid_value > 0 and lt[mid_value] >= lt[mid_value - 1]) and\
+       (mid_value < length - 1 and lt[mid_value] >= lt[mid_value + 1]):
+        return lt[mid_value]
+
+    # If left neighbor is greater, search the left half
+    if mid_value > 0 and lt[mid_value - 1] > lt[mid_value]:
+        return find_peak(lt[:mid_value])  # search in left half
+
+    # If right neighbor is greater, search the right half
+    return find_peak(lt[mid_value + 1:])  # search in right half
