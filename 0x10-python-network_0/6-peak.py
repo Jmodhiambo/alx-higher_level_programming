@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# This function returns the peak value in a list or None if empty
+"""This function returns the peak value in a list or None if empty"""
+
 
 def find_peak(list_of_integers):
     """Returns a peak value from a list"""
